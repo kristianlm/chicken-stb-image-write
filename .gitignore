@@ -1,0 +1,8 @@
+/stb-image-write
+/stb-image-write.build.sh
+/stb-image-write.import.scm
+/stb-image-write.import.so
+/stb-image-write.install.sh
+/stb-image-write.link
+/stb-image-write.so
+/stb-image-write.static.o
