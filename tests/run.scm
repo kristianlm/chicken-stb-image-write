@@ -8,7 +8,7 @@
 	  stb-image-write
 	  srfi-4))
  (else
-  (use stb-image-write srfi-4 ports extras)))
+  (use stb-image-write (only srfi-1 iota) srfi-4 ports extras)))
 
 (define (write-all* label w h c image flip?)
 

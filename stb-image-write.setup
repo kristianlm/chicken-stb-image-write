@@ -1,4 +1,4 @@
 ;; -*- scheme -*-
-(compile -s -J stb-image-write-module.scm -o "stb-image-write.so")
+(compile -s -J stb-image-write-module4.scm -o "stb-image-write.so")
 (compile -s "stb-image-write.import.scm")
-(install-extension)
+(install-extension 'stb-image-write '("stb-image-write.so" "stb-image-write.import.so"))

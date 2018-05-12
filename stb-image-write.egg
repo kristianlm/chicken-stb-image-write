@@ -2,4 +2,4 @@
 ((author "Kristian Lein-Mathisen")
  (license public-domain)
  (components (extension stb-image-write
-			(source "stb-image-write-module.scm"))))
+			(source "stb-image-write-module5.scm"))))
