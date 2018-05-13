@@ -18,13 +18,14 @@ Writes the image data to `(current-output-port)` in the format of the
 procedure name. `data` format depends on `components`, which
 represents the number of bytes per pixel:
 
-    1: 8 bits gray
-	2: 8 bits gray + 8 bits alpha
-	3: 8 bits of rgb
-	4: 8 bits of rgb + 8 bits alpha
+	1: y8 (gray)
+	2: ya16 (gray + alpha)
+	3: rgb24
+	4: rgba32
 
 Extra parameters are:
 
+- `flip` specifies whether to flip the image vertically before outputting
 - png `compression` sets the `zlib` compression quality. defaults to
   8, try higher values for more compression
 - png `stride` is the distance in bytes from the first byte of a row
@@ -33,6 +34,7 @@ Extra parameters are:
   type](https://en.wikipedia.org/wiki/Portable_Network_Graphics#Filtering)
   for all scanlines. defaults to trying all and picking the most
   efficient (`#f`), other valid values are 0-4.
+- jpg `quality` specifies lossy compression amount as a percentage (defaults to 80)
 - tga `rle` enables or disable run-length-encoding compression. it is
   on by default, set to `#f` to disable rle compression
 
