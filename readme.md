@@ -5,7 +5,7 @@
 
 ## Requirements
 
-None, `stb_image_write.h` is embedded in the egg.
+None, `stb_image_write.h` v1.09 is embedded in the egg.
 
 ## API
 
