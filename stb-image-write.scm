@@ -96,7 +96,7 @@ void cbuf_write_func(void* context, void* data, int size) {
 	((blob? data) data)
 	(else (error "image data not string/blob/u8vector" data))))
 
-(define (write-png w h c data #!key
+(define (write-png data w h c #!key
 		   flip (compression 8)
 		   (stride 0) (filter #f))
 
@@ -116,19 +116,19 @@ void cbuf_write_func(void* context, void* data, int size) {
     w h c (blobify data) stride)
    'write-png))
 
-(define (write-jpg w h c data #!key flip (quality 80))
+(define (write-jpg data w h c #!key flip (quality 80))
   (flip-set! flip)
   (check
    ((stbi-writer "stbi_write_jpg_to_func" ((int quality 80)))
     w h c (blobify data) quality)
    'write-jpg))
 
-(define (write-bmp w h c data #!key flip)
+(define (write-bmp data w h c #!key flip)
   (flip-set! flip)
   (check ((stbi-writer "stbi_write_bmp_to_func" ()) w h c (blobify data))
 	 'write-bmp))
 
-(define (write-tga w h c data #!key flip (rle #t))
+(define (write-tga data w h c #!key flip (rle #t))
   (flip-set! flip)
   ((foreign-lambda* void ((int rle)) "stbi_write_tga_with_rle = rle;")
    (if rle 1 0))

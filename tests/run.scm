@@ -10,7 +10,7 @@
  (else
   (use stb-image-write (only srfi-1 iota) srfi-4 ports extras)))
 
-(define (write-all* label w h c image flip?)
+(define (write-all* label image w h c flip?)
 
   (define fliplabel (if flip? '("flip") '()))
   (define colorlabel (cond ((= 1 c) "y")
@@ -31,12 +31,12 @@
 
   (define (jpg quality)
     (saveto (labeler "jpg" (conc "q" quality))
-	    (lambda () (write-jpg w h c image quality: quality flip: flip?))))
+	    (lambda () (write-jpg image w h c quality: quality flip: flip?))))
   (jpg 5) (jpg 30) (jpg 50) (jpg 80) (jpg 100)
 
   (define (png compress filter)
     (saveto (labeler "png" (conc "z" compress) (if filter (conc "f" filter) '()))
-	    (lambda () (write-png w h c image
+	    (lambda () (write-png image w h c
 			     filter: filter
 			     compress: compress
 			     flip: flip?))))
@@ -45,29 +45,29 @@
 
   (define (tga rle?)
     (saveto (labeler "tga" (if rle? "rle" '()))
-	    (lambda () (write-tga w h c image flip: flip? rle: rle?))))
+	    (lambda () (write-tga image w h c flip: flip? rle: rle?))))
   (tga #t)
   (tga #f)
 
-  (saveto (labeler "bmp") (lambda () (write-bmp w h c image flip: flip?))))
+  (saveto (labeler "bmp") (lambda () (write-bmp image w h c flip: flip?))))
 
-(define (write-all label w h c image)
-  (write-all* label w h c image #f)
-  (write-all* label w h c image #t))
+(define (write-all label image w h c)
+  (write-all* label image w h c #f)
+  (write-all* label image w h c #t))
 
-(write-all "red" 16 9 1
-	   (let ((b 255) (r 128) (_ 0))
-	     (list->u8vector
-	      (flatten
-	       (list b b b b b b b b b b b b b b b b
-		     b _ _ _ _ _ _ _ _ _ _ _ _ _ _ b
-		     b _ _ r r r _ r r r _ r r _ _ b
-		     b _ _ r _ r _ r _ _ _ r _ r _ b
-		     b _ _ r r r _ r r r _ r _ r _ b
-		     b _ _ r r _ _ r _ _ _ r _ r _ b
-		     b _ _ r _ r _ r r r _ r r _ _ b
-		     b _ _ _ _ _ _ _ _ _ _ _ _ _ _ b
-		     b b b b b b b b b b b b b b b b)))))
+(let* ((b 255) (r 128) (_ 0)
+       (image (list->u8vector
+	       (flatten
+		(list b b b b b b b b b b b b b b b b
+		      b _ _ _ _ _ _ _ _ _ _ _ _ _ _ b
+		      b _ _ r r r _ r r r _ r r _ _ b
+		      b _ _ r _ r _ r _ _ _ r _ r _ b
+		      b _ _ r r r _ r r r _ r _ r _ b
+		      b _ _ r r _ _ r _ _ _ r _ r _ b
+		      b _ _ r _ r _ r r r _ r r _ _ b
+		      b _ _ _ _ _ _ _ _ _ _ _ _ _ _ b
+		      b b b b b b b b b b b b b b b b)))))
+  (write-all "red" image 16 9 1))
 
 (define (u8rgb-test w h)
   (let ((data (make-u8vector (* w h 3) 128))
@@ -86,7 +86,7 @@
     data))
 
 (let ((w 3840) (h 2160))
-  (write-all "4k" w h 3 (u8rgb-test w h)))
+  (write-all "4k" (u8rgb-test w h) w h 3))
 
 (define (f32rgb-test w h)
   (let ((data (make-f32vector (* w h 3) 0.5))
@@ -105,30 +105,30 @@
     data))
 
 
-(write-all "red" 16 9 2
-	   (let ((b '(255 255)) (r '(255 128)) (_ '(0 0)))
-	     (list->u8vector
-	      (flatten
-	       (list b b b b b b b b b b b b b b b b
-		     b _ _ _ _ _ _ _ _ _ _ _ _ _ _ b
-		     b _ _ r r r _ r r r _ r r _ _ b
-		     b _ _ r _ r _ r _ _ _ r _ r _ b
-		     b _ _ r r r _ r r r _ r _ r _ b
-		     b _ _ r r _ _ r _ _ _ r _ r _ b
-		     b _ _ r _ r _ r r r _ r r _ _ b
-		     b _ _ _ _ _ _ _ _ _ _ _ _ _ _ b
-		     b b b b b b b b b b b b b b b b)))))
+(let* ((b '(255 255)) (r '(255 128)) (_ '(0 0))
+       (image (list->u8vector
+	       (flatten
+		(list b b b b b b b b b b b b b b b b
+		      b _ _ _ _ _ _ _ _ _ _ _ _ _ _ b
+		      b _ _ r r r _ r r r _ r r _ _ b
+		      b _ _ r _ r _ r _ _ _ r _ r _ b
+		      b _ _ r r r _ r r r _ r _ r _ b
+		      b _ _ r r _ _ r _ _ _ r _ r _ b
+		      b _ _ r _ r _ r r r _ r r _ _ b
+		      b _ _ _ _ _ _ _ _ _ _ _ _ _ _ b
+		      b b b b b b b b b b b b b b b b)))))
+  (write-all "red" image 16 9 2))
 
-(write-all "red" 16 9 4
-	   (let ((r '(255 0 0 255)) (b '(0 0 255 128)) (_ '(0 0 0 0)))
-	     (list->u8vector
-	      (flatten
-	       (list b b b b b b b b b b b b b b b b
-		     b _ _ _ _ _ _ _ _ _ _ _ _ _ _ b
-		     b _ _ r r r _ r r r _ r r _ _ b
-		     b _ _ r _ r _ r _ _ _ r _ r _ b
-		     b _ _ r r r _ r r r _ r _ r _ b
-		     b _ _ r r _ _ r _ _ _ r _ r _ b
-		     b _ _ r _ r _ r r r _ r r _ _ b
-		     b _ _ _ _ _ _ _ _ _ _ _ _ _ _ b
-		     b b b b b b b b b b b b b b b b)))))
+(let* ((r '(255 0 0 255)) (b '(0 0 255 128)) (_ '(0 0 0 0))
+       (image (list->u8vector
+	       (flatten
+		(list b b b b b b b b b b b b b b b b
+		      b _ _ _ _ _ _ _ _ _ _ _ _ _ _ b
+		      b _ _ r r r _ r r r _ r r _ _ b
+		      b _ _ r _ r _ r _ _ _ r _ r _ b
+		      b _ _ r r r _ r r r _ r _ r _ b
+		      b _ _ r r _ _ r _ _ _ r _ r _ b
+		      b _ _ r _ r _ r r r _ r r _ _ b
+		      b _ _ _ _ _ _ _ _ _ _ _ _ _ _ b
+		      b b b b b b b b b b b b b b b b)))))
+  (write-all "red" image 16 9 4))
