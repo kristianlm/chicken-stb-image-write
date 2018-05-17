@@ -14,9 +14,9 @@ None, `stb_image_write.h` v1.09 is embedded in the egg.
     [procedure] (write-tga data width height components #!key flip rle)
     [procedure] (write-bmp data width height components #!key flip)
 	
-Writes the image data to `(current-output-port)` in the format of the
-procedure name. `data` format depends on `components`, which
-represents the number of bytes per pixel:
+Writes the image data to `(current-output-port)` using the image
+format of the procedure name. The pixel format of `data` depends on
+`components`, which represents the number of bytes per pixel:
 
 	1: y8 (gray)
 	2: ya16 (gray + alpha)
