@@ -6,3 +6,4 @@
 /stb-image-write.link
 /stb-image-write.so
 /stb-image-write.static.o
+/tests/out-*
