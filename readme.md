@@ -9,13 +9,13 @@ None, `stb_image_write.h` v1.09 is embedded in the egg.
 
 ## API
 
-    [procedure] (write-png data width height components #!key flip compression stride filter)
-    [procedure] (write-jpg data width height components #!key flip quality)
-    [procedure] (write-tga data width height components #!key flip rle)
-    [procedure] (write-bmp data width height components #!key flip)
+    [procedure] (write-png pixels width height components #!key flip compression stride filter)
+    [procedure] (write-jpg pixels width height components #!key flip quality)
+    [procedure] (write-tga pixels width height components #!key flip rle)
+    [procedure] (write-bmp pixels width height components #!key flip)
 	
-Writes the image data to `(current-output-port)` using the image
-format of the procedure name. The pixel format of `data` depends on
+Writes the u8vector `pixels` to `(current-output-port)` using the
+image format of the procedure name. The pixel format depends on
 `components`, which represents the number of bytes per pixel:
 
 	1: y8 (gray)
