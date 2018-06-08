@@ -1,5 +1,6 @@
 ;; -*- scheme -*-
 ((author "Kristian Lein-Mathisen")
  (license public-domain)
+ (test-dependencies test srfi-1)
  (components (extension stb-image-write
 			(source "stb-image-write-module5.scm"))))

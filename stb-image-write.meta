@@ -1,3 +1,4 @@
 ;; -*- scheme -*-
 ((author "Kristian Lein-Mathisen")
- (license public-domain))
+ (license public-domain)
+ (test-depends test)) ;; srfi-1 in core
