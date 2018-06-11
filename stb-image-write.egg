@@ -1,5 +1,6 @@
 ;; -*- scheme -*-
 ((author "Kristian Lein-Mathisen")
+ (synopsis "write png/jpg/tga/bmp images")
  (license public-domain)
  (test-dependencies test srfi-1)
  (category graphics)
