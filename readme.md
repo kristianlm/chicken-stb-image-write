@@ -38,6 +38,9 @@ Extra parameters are:
 - tga `rle` enables or disable run-length-encoding compression. it is
   on by default, set to `#f` to disable rle compression
 
+Note that on 32-bit systems, blobs cannot be larger than 16M. This
+also limits image sizes as pixel data is stored in a blob.
+
 ## Example
 
 ```scheme

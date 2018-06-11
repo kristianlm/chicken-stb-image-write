@@ -85,8 +85,8 @@
     (u8vector-set! data (+ 2 (* 3 10) (* 3 w 10)) #xff)
     data))
 
-(let ((w 3840) (h 2160))
-  (write-all "4k" (u8rgb-test w h) w h 3))
+(let ((w 2048) (h 1024))
+  (write-all "big" (u8rgb-test w h) w h 3))
 
 (define (f32rgb-test w h)
   (let ((data (make-f32vector (* w h 3) 0.5))
