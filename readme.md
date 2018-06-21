@@ -67,3 +67,7 @@ also limits image sizes as pixel data is stored in a blob.
 
 - test png stride
 - see if it's possible to write data to port without copying memory
+
+## Source
+
+The source is located [here](https://github.com/kristianlm/chicken-stb-image-write).
