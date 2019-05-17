@@ -44,23 +44,27 @@ also limits image sizes as pixel data is stored in a blob.
 ## Example
 
 ```scheme
+(use stb-image-write)
+
+(define %pixels
+  (let ((r '(255   0   0 255))
+        (b '(  0   0 255 128))
+        (_ '(  0   0   0   0)))
+    (list->u8vector
+     (flatten
+      (list b b b b b b b b b b b b b b b b
+            b _ _ _ _ _ _ _ _ _ _ _ _ _ _ b
+            b _ _ r r r _ r r r _ r r _ _ b
+            b _ _ r _ r _ r _ _ _ r _ r _ b
+            b _ _ r r r _ r r r _ r _ r _ b
+            b _ _ r r _ _ r _ _ _ r _ r _ b
+            b _ _ r _ r _ r r r _ r r _ _ b
+            b _ _ _ _ _ _ _ _ _ _ _ _ _ _ b
+            b b b b b b b b b b b b b b b b)))))
+
 (with-output-to-file "red.png"
   (lambda ()
-    (write-png 16 9 4
-	       (let ((r '(255   0   0 255))
-		     (b '(  0   0 255 128))
-		     (_ '(  0   0   0   0)))
-		 (list->u8vector
-		  (flatten
-		   (list b b b b b b b b b b b b b b b b
-			 b _ _ _ _ _ _ _ _ _ _ _ _ _ _ b
-			 b _ _ r r r _ r r r _ r r _ _ b
-			 b _ _ r _ r _ r _ _ _ r _ r _ b
-			 b _ _ r r r _ r r r _ r _ r _ b
-			 b _ _ r r _ _ r _ _ _ r _ r _ b
-			 b _ _ r _ r _ r r r _ r r _ _ b
-			 b _ _ _ _ _ _ _ _ _ _ _ _ _ _ b
-			 b b b b b b b b b b b b b b b b)))))))
+    (write-png %pixels 16 9 4)))
 ```
 
 ## TODO
